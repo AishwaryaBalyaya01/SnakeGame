@@ -38,13 +38,18 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
     
     }
     
-    public void checkApple(){
+    public void checkApples(){
     
     }
     
     public void checkCollections(){
     
     }
+    
+    public void gameOver(Graphics g){
+    
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
