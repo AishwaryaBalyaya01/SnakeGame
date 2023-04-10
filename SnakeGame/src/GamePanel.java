@@ -2,6 +2,11 @@
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.Random;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -76,8 +81,13 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
     public void actionPerformed(ActionEvent arg0) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-
+    
+    public MyKeyAdapter extends KeyAdapterstatic {
+        @Override
+        public void keyPressed(KeyEvent e){
+    
+    }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
