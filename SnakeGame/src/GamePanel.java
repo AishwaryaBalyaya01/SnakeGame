@@ -44,6 +44,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
 	
 	public void draw(Graphics g) {
+		if(running) {
 		for(int i =0;i<screen_height/unit_size;i++) {
 			g.drawLine(i*unit_size, 0, i*unit_size, screen_height); //x1,y1,x2,y2
 			g.drawLine(0,i*unit_size, screen_width, i*unit_size);// 
@@ -60,6 +61,7 @@ public class GamePanel extends JPanel implements ActionListener{
 				g.setColor(new Color(45,180,0));
 				g.fillRect(x[i], y[i], unit_size,unit_size);
 			}
+		}
 		}
 	}
 	
@@ -90,7 +92,11 @@ public class GamePanel extends JPanel implements ActionListener{
 		}
 	}
 	public void checkApple() {
-		
+		if((x[0]== appleX) && (y[0]== appleY)) {
+			body_parts++;
+			applesEaten++;
+			newApple();
+		}
 	}
 	public void checkCollisions() {
 		// checks if head collides with body
