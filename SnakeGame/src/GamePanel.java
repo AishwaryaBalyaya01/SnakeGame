@@ -8,7 +8,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	
 	static final int screen_width = 600;
 	static final int screen_height = 600;
-	static final int unit_size = 50;
+	static final int unit_size = 25;
 	static final int game_units = (screen_width*screen_height)/unit_size;
 	static final int delay = 75;
 	final int[] x = new int[game_units];
@@ -38,8 +38,8 @@ public class GamePanel extends JPanel implements ActionListener{
 		timer.start();
 	}
 	
-	public void paintComponents(Graphics g) {
-		super.paintComponents(g);
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		draw(g);
 	}
 	
@@ -48,17 +48,35 @@ public class GamePanel extends JPanel implements ActionListener{
 			g.drawLine(i*unit_size, 0, i*unit_size, screen_height);
 			g.drawLine(0,i*unit_size, screen_width, i*unit_size);
 		}
+		g.setColor(Color.red);
+		g.fillOval(appleX, appleY, unit_size, unit_size);
 	}
 	
 	public void newApple() {
 		appleX = random.nextInt((int)(screen_width/unit_size))*unit_size; //to place evenly in the unit place
 		appleY = random.nextInt((int)(screen_height/unit_size))*unit_size; //to place evenly in the unit place
-		
 	}
 	
 	public void move() {
+		for(int i =body_parts;i>0;i--) {
+			x[i] = x[i-1];
+			y[i] = y[i-1];
+		}
 		
-		
+		switch(direction) {
+		case'U':
+			y[0] = y[0]-unit_size;
+			break;
+		case'D':
+			y[0] = y[0]+unit_size;
+			break;
+		case'L':
+			x[0] = x[0]-unit_size;
+			break;
+		case'R':
+			x[0] = x[0]+unit_size;
+			break;
+		}
 	}
 	public void checkApple() {
 		
