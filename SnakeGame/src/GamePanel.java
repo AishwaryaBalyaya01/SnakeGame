@@ -10,7 +10,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	static final int screen_height = 600;
 	static final int unit_size = 25;
 	static final int game_units = (screen_width*screen_height)/unit_size;
-	static final int delay = 75;
+	static final int delay = 100;
 	final int[] x = new int[game_units];
 	final int[] y = new int[game_units];
 	int body_parts = 6;
@@ -45,11 +45,22 @@ public class GamePanel extends JPanel implements ActionListener{
 	
 	public void draw(Graphics g) {
 		for(int i =0;i<screen_height/unit_size;i++) {
-			g.drawLine(i*unit_size, 0, i*unit_size, screen_height);
-			g.drawLine(0,i*unit_size, screen_width, i*unit_size);
+			g.drawLine(i*unit_size, 0, i*unit_size, screen_height); //x1,y1,x2,y2
+			g.drawLine(0,i*unit_size, screen_width, i*unit_size);// 
 		}
 		g.setColor(Color.red);
 		g.fillOval(appleX, appleY, unit_size, unit_size);
+		
+		for(int i = 0;i<body_parts;i++) {
+			if(i==0) {
+				g.setColor(Color.green);
+				g.fillRect(x[i], y[i], unit_size,unit_size);
+			}
+			else {
+				g.setColor(new Color(45,180,0));
+				g.fillRect(x[i], y[i], unit_size,unit_size);
+			}
+		}
 	}
 	
 	public void newApple() {
@@ -82,8 +93,24 @@ public class GamePanel extends JPanel implements ActionListener{
 		
 	}
 	public void checkCollisions() {
+		// checks if head collides with body
+		for(int i = body_parts;i>0;i--) {
+			if((x[0]==x[i]) && (y[0]==y[i])) running = false;
+		}
 		
+		//check if heads touches the left border
+		if(x[0]<0) running = false;
 		
+		//check if heads touches the right border
+		if(x[0]>screen_width) running = false;
+		
+		//check if heads touches the top border
+		if(y[0]<0) running = false;
+				
+		//check if heads touches the bottom border
+		if(y[0]>screen_height) running = false;
+		
+		if(!running) timer.stop();
 	}
 	public void gameOver(Graphics g) {
 		
@@ -92,14 +119,31 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(running) {
+			move();
+			checkApple();
+			checkCollisions();
+		}
+		repaint();
 	}
 	
 	public class MyKeyAdapter extends KeyAdapter{
 		@Override
 		public void keyPressed(KeyEvent e) {
-			
+			switch(e.getKeyCode()) {
+			case KeyEvent.VK_LEFT:
+				direction = 'L';
+				break;
+			case KeyEvent.VK_RIGHT:
+				direction = 'R';
+				break;
+			case KeyEvent.VK_UP:
+				direction = 'U';
+				break;
+			case KeyEvent.VK_DOWN:
+				direction = 'D';
+				break;
+			}
 		}
 	}
 
